@@ -8,7 +8,7 @@ const Sidebar = ({ setToken }) => {
   return (
     <div className="sidebar-container">
       <div className="sidebar-header">
-        <h2>FoodSpot</h2>
+        <h2>Food Kitchen</h2>
       </div>
       <div className="sidebar-links">
         <NavLink className="sidebar-link" to="/add">
