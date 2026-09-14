@@ -16,20 +16,13 @@ const Add = ({ token }) => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
+    if (!image) {
+      toast.error("Please upload a product image");
+      return;
+    }
+
     try {
-      if (!image) {
-        toast.error("Please select a product image");
-        return;
-      }
-
-      const compressedImage = await imageCompression(image, {
-        maxSizeMB: 2,
-        maxWidthOrHeight: 1920,
-        useWebWorker: true,
-      });
-
-      console.log("Original image size:", image.size);
-      console.log("Compressed image size:", compressedImage.size);
+      setLoading(true);
 
       const formData = new FormData();
 
@@ -37,22 +30,22 @@ const Add = ({ token }) => {
       formData.append("description", description);
       formData.append("price", price);
       formData.append("category", category);
-      formData.append("image", compressedImage);
+      formData.append("image", image);
 
       const response = await axios.post(
         `${backendUrl}/api/product/add`,
         formData,
         {
           headers: {
-            token,
+            token: token,
           },
         },
       );
 
-      console.log("SERVER RESPONSE:", response.data);
+      console.log("ADD PRODUCT RESPONSE:", response.data);
 
       if (response.data.success) {
-        toast.success(response.data.message);
+        toast.success(response.data.message || "Product added successfully");
 
         setName("");
         setDescription("");
@@ -60,13 +53,15 @@ const Add = ({ token }) => {
         setCategory("All");
         setImage(null);
       } else {
-        toast.error(response.data.message);
+        toast.error(response.data.message || "Failed to add product");
       }
     } catch (error) {
-      console.log("FULL ERROR:", error);
-      console.log("SERVER RESPONSE:", error.response?.data);
+      console.error("ADD PRODUCT ERROR:", error);
+      console.error("SERVER RESPONSE:", error.response?.data);
 
       toast.error(error.response?.data?.message || "Failed to add product");
+    } finally {
+      setLoading(false);
     }
   };
   return (
