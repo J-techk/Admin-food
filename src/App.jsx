@@ -7,7 +7,7 @@ import Orders from "./pages/Orders/Order";
 import Login from "./component/login/Login";
 import { ToastContainer } from "react-toastify";
 
-export const backendUrl = "https://backend-foods-eight.vercel.app/";
+export const backendUrl = "https://backend-foods-eight.vercel.app";
 export const currency = "$";
 
 const App = () => {
