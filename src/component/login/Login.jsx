@@ -3,7 +3,7 @@ import "./Login.css";
 import Axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-const backendUrl = "https://backend-foods-eight.vercel.app/";
+const backendUrl = "https://backend-foods-eight.vercel.app";
 
 const Login = ({ setToken }) => {
   const [email, setEmail] = useState("");
